@@ -1,0 +1,9 @@
+# predict.py
+numpy==2.4.4
+pandas==2.3.1
+scikit-learn==1.8.0
+joblib==1.5.3
+# analysis.ipynb only
+matplotlib
+seaborn
+jupyter
