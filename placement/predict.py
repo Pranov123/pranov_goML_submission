@@ -1,11 +1,3 @@
-"""Score a list of registered students with the pre-trained placement model.
-
-    python predict.py --input some_students.csv --output predictions.csv
-
-By default this uses model.joblib, which does NOT use `status_code` (see analysis.ipynb, section 1.6).
-Add --use-status-code to use model_with_status_code.joblib instead.
-No model is fitted here; the models are trained and saved in analysis.ipynb.
-"""
 import argparse
 import sys
 from pathlib import Path
