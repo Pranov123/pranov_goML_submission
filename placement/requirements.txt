@@ -7,3 +7,5 @@ joblib==1.5.3
 matplotlib
 seaborn
 jupyter
+# tests only
+pytest
