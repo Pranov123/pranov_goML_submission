@@ -13,7 +13,7 @@ pip install -r requirements.txt
 python predict.py --input some_students.csv --output predictions.csv
 ```
 
-`predict.py` loads the pre-trained `model.joblib` (logistic regression, threshold tuned for F1, CV F1 ≈ 0.57).
+`predict.py` loads the pre-trained `model.joblib` (logistic regression without `status_code` or `city_tier`, threshold tuned for F1, CV F1 ≈ 0.56).
 It does **not** use `status_code`, which the analysis shows is almost certainly target leakage.
 `--use-status-code` switches to `model_with_status_code.joblib` (CV F1 ≈ 0.92) for comparison.
 See `analysis.ipynb` for the reasoning.
