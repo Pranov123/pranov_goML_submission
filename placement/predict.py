@@ -5,6 +5,7 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
+import sklearn
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_MODEL = HERE / "model.joblib"
@@ -87,6 +88,9 @@ def main():
 
     model_path = Path(args.model) if args.model else (STATUS_MODEL if args.use_status_code else DEFAULT_MODEL)
     bundle = joblib.load(model_path)
+    if bundle.get("sklearn_version") != sklearn.__version__:
+        print(f"warning: model was saved with scikit-learn {bundle.get('sklearn_version')}, running {sklearn.__version__}; "
+              f"install requirements.txt (or run train.py) if predictions look wrong", file=sys.stderr)
 
     raw = pd.read_csv(args.input, dtype={"student_id": str})
     if "student_id" not in raw:

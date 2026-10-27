@@ -9,7 +9,14 @@
 
 ## Part 1: Will this student get placed?
 
+> **Note for reviewers: `status_code`.** By default, `predict.py` does **not** use the `status_code` column. The analysis shows it is target leakage: it is recorded after the placement outcome, and a model built on it falls below the trivial baseline as soon as the field isn't filled in (see *Key findings 1*).
+> If your scoring list carries `status_code` filled in the same way as `train.csv` and you want to score that version too, run
+> `python predict.py --input <file> --output <file> --use-status-code`
+> (CV F1 ≈ 0.92). I submit the leak-free model as my answer because it is the one that works on a genuinely new list of registered students.
+
 ### Run it
+
+Requires **Python 3.11+**. The saved models need scikit-learn 1.8.0 exactly (pinned in `requirements.txt`; `predict.py` warns on a mismatch, and `python train.py` rebuilds them for any installed version).
 
 ```bash
 cd placement
@@ -27,13 +34,14 @@ python -m pytest tests                     # 8 tests: format, determinism, messy
 
 ### Result
 
-| | CV F1 (placed = 1) | Notes |
+| | F1 (placed = 1) | Notes |
 | --- | --- | --- |
-| **Default model** (`model.joblib`) | **0.564** | Logistic regression, threshold 0.25 |
+| **Default model** (`model.joblib`) | **0.553** nested CV (± 0.033) · **0.552** holdout | Logistic regression, threshold 0.25 |
+| Same model, plain CV | 0.564 | Slightly optimistic: threshold tuned on the same folds |
 | Predict "placed" for everyone | 0.44 | Trivial baseline |
 | Model using `status_code` | 0.924 | Collapses when the leak is removed (see below) |
 
-**Expected F1 on a new list:** about 0.56, likely between **0.50 and 0.62** on a list of 500 students (bootstrap).
+**Expected F1 on a new list:** about **0.55**, likely between **0.49 and 0.61** on a list of 500 students. Nested CV picks the threshold inside each training fold, so this estimate is unbiased.
 
 ### Key findings
 
@@ -54,6 +62,7 @@ python -m pytest tests                     # 8 tests: format, determinism, messy
 - Logistic regression matched gradient boosting, random forests, splines and interaction terms. All scored 0.55–0.57, within noise.
 - Tuning the threshold mattered most: F1 is 0.45 at the default 0.5 and 0.56 at 0.25.
 - The threshold is stable across resamples (0.23–0.35), and fixing it at 0.25 costs only 0.003 F1.
+- Model and threshold selection did not overfit: nested CV (0.553) is only about 0.01 below plain CV (0.564).
 
 **4. Data quality.**
 - Missing values: `coding_score` 21%, `backlogs` 6.7%, `cgpa` 4.7%, `status_code` 4.5%.
@@ -74,7 +83,7 @@ python -m pytest tests                     # 8 tests: format, determinism, messy
 
 | File | Purpose |
 | --- | --- |
-| `analysis.ipynb` | Full analysis: EDA, leak investigation, model comparison, stress test, uncertainty, error analysis, fairness. TL;DR at the top. |
+| `analysis.ipynb` | Full analysis: EDA, leak investigation, model comparison, stress test, uncertainty, error analysis, fairness. TL;DR and a 10-minute reading guide at the top. |
 | `predict.py` | Scores a CSV with the saved model and checks the input |
 | `train.py` | Rebuilds the saved models; the notebook confirms it reproduces the same threshold and F1 |
 | `model.joblib` | Default model (no `status_code`, no `city_tier`) |
