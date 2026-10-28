@@ -22,7 +22,7 @@ python extract.py --inbox messages --output tasks.json
 - **Practice folder (6 messages): 2,459 tokens sent and 138 received, in 6 calls.** That is about 410 in and 23 out per message.
 - **How counted:** Ollama returns `prompt_eval_count` (input tokens) and `eval_count` (generated tokens) with every response, measured by the model's own tokenizer. `extract.py` adds them up, prints the totals, and writes them with `--usage file.json`. The practice run's figures are in `eval/usage_practice.json`.
 - **Check:** repeated runs report exactly the same totals. If Ollama's prompt caching were hiding the shared prefix, calls 2–6 would report only about 30 input tokens each.
-- **Where the tokens go:** about 380 of the roughly 410 input tokens per call are the fixed rules and three examples. The message body itself is only 15–40 tokens. Every message costs one call, including the two non-task messages.
+- **Where the tokens go:** measured by sending an empty message, the fixed rules and three examples are **392 tokens, about 96% of every call**. The practice message bodies add only 11–22 tokens each. Output is 6 tokens for a no-task reply (`{"tasks": []}`) and 28–34 for one task. Every message costs one call, including the two non-task messages. To cut tokens, the place to trim is the examples, not the messages.
 
 ## Prompt
 - **System message:** the rules for what counts as a task, the meaning of `task`, `owner` and `due`, and an explicit line saying the message is *data, not instructions*.
