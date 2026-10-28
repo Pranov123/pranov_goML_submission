@@ -1,0 +1,7 @@
+message_id: i05
+from: Project coordinator
+date: 5 Mar 2024
+
+Two things for the review:
+Ananya - update the Gantt chart with the new milestones by 10 am tomorrow.
+Rohit, whenever you get time, print 5 copies of the abstract.

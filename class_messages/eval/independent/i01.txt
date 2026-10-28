@@ -1,0 +1,11 @@
+message_id: i01
+from: HOD, Dept of CSE
+date: 4 Mar 2024
+
+Dear Karthik,
+
+Kindly submit the signed attendance sheets for all four lab batches to the department office latest by Friday 4 pm.
+
+Regards,
+Dr. S. Raghavan
+Head of Department

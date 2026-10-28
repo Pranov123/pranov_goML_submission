@@ -1,0 +1,5 @@
+message_id: i16
+from: Class mentor
+date: 8 Mar 2024
+
+Please remind everyone that hall tickets must be collected from the exam cell by Monday.

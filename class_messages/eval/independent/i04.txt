@@ -1,0 +1,5 @@
+message_id: i04
+from: Library office
+date: 5 Mar 2024
+
+FYI: The central library will remain closed on Saturday due to annual stock verification. Plan accordingly.

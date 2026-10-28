@@ -1,0 +1,5 @@
+message_id: i14
+from: Faculty guide
+date: 7 Mar 2024
+
+The poster template needs to be updated with the new college logo.

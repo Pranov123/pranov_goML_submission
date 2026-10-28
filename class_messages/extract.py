@@ -68,6 +68,14 @@ INJECTION_PATTERNS = [
 INJECTION_RE = re.compile("|".join(INJECTION_PATTERNS), re.IGNORECASE)
 ABBREVIATIONS = re.compile(r"\b(Prof|Dr|Mr|Mrs|Ms|St|No|vs|e\.g|i\.e)\.", re.IGNORECASE)
 
+# Actions no class task should involve. Checked on the model's OUTPUT, so it also catches injections
+# that got past INJECTION_RE (where the injected words are still in the message, so grounding can't help).
+NOT_A_CLASS_TASK_RE = re.compile(
+    r"answer\s*key|password|\botp\b|\bpin\s*(code|number|no)\b|\batm\b|bank|account\s*(number|no|details)|\btransfer\b.{0,30}(rs|₹|inr|money|fund)"
+    r"|\b(pay|send)\b.{0,20}(rs\.?|₹|inr)\s*\d|(delete|erase|wipe|remove)\b.{0,30}(record|attendance|marks|grades|data|files)"
+    r"|(everyone|every student|all students|class)'?s?\b.{0,20}(grades|marks|phone|numbers|contact|address|password)",
+    re.IGNORECASE)
+
 # Deadline phrases: "before/until ..." or "by" followed by a time word (so "by Rohan" or "by email" don't count)
 TIME_WORD = (r"(?:mon|tues?|wed(?:nes)?|thu(?:rs)?|fri|sat(?:ur)?|sun)(?:day)?\b"
              r"|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\b"
@@ -158,6 +166,10 @@ def validate(raw, body, log_prefix):
             continue
         task = re.sub(r"\s+", " ", t["task"]).strip().rstrip(".")
         task = task[0].upper() + task[1:]
+
+        if NOT_A_CLASS_TASK_RE.search(task):
+            log(f"{log_prefix}: dropped task that is not a class task: {task!r}")
+            continue
 
         # Task wording must come from the message: most content words should appear in it
         words = [w for w in re.findall(r"[\w@.'-]+", task) if w.lower() not in STOPWORDS and len(w) > 2]

@@ -1,0 +1,94 @@
+{
+  "tasks": [
+    {
+      "message_id": "i01",
+      "task": "Submit the signed attendance sheets to the department office",
+      "owner": "Karthik",
+      "due": "Friday 4 pm"
+    },
+    {
+      "message_id": "i02",
+      "task": "Book the seminar hall for the demo rehearsal",
+      "owner": null,
+      "due": "before thursday"
+    },
+    {
+      "message_id": "i05",
+      "task": "Update the Gantt chart with the new milestones",
+      "owner": "Ananya",
+      "due": "10 am tomorrow"
+    },
+    {
+      "message_id": "i05",
+      "task": "Print 5 copies of the abstract",
+      "owner": "Rohit",
+      "due": null
+    },
+    {
+      "message_id": "i06",
+      "task": "Get the HDMI cable from the lab",
+      "owner": "Rahul",
+      "due": "tmrw morning before 9"
+    },
+    {
+      "message_id": "i07",
+      "task": "Collect the feedback forms from the 2nd yr section",
+      "owner": "Meera",
+      "due": "EOD"
+    },
+    {
+      "message_id": "i09",
+      "task": "Return the borrowed multimeters to the electronics lab",
+      "owner": null,
+      "due": "within 2 days"
+    },
+    {
+      "message_id": "i13",
+      "task": "Upload the ppt to drive",
+      "owner": "nikhil",
+      "due": "b4 sat nite"
+    },
+    {
+      "message_id": "i14",
+      "task": "Update the poster template with the new college logo",
+      "owner": null,
+      "due": null
+    },
+    {
+      "message_id": "i15",
+      "task": "Finalise the budget sheet and email it to Prof. Rao",
+      "owner": "Sanjay and Fatima",
+      "due": "before the 15th"
+    },
+    {
+      "message_id": "i16",
+      "task": "Remind everyone to collect hall tickets from the exam cell",
+      "owner": null,
+      "due": "Monday"
+    },
+    {
+      "message_id": "i17",
+      "task": "Collect the visitor ID badges from the admin office",
+      "owner": "Deepak Menon",
+      "due": "Wednesday noon"
+    },
+    {
+      "message_id": "i17",
+      "task": "Submit final project titles",
+      "owner": "All team leads",
+      "due": "within 2 days of this notice"
+    },
+    {
+      "message_id": "i17",
+      "task": "Obtain late-stay permission from the warden",
+      "owner": "Hostel students",
+      "due": null
+    },
+    {
+      "message_id": "i19",
+      "task": "Send day 1 photos to Harini",
+      "owner": null,
+      "due": "asap"
+    }
+  ]
+}
