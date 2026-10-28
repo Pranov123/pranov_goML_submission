@@ -40,20 +40,14 @@ def bodies(inbox):
     return out
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--predicted", required=True)
-    ap.add_argument("--expected", required=True)
-    ap.add_argument("--inbox", required=True)
-    ap.add_argument("--quiet", action="store_true")
-    args = ap.parse_args()
-
+def score(predicted_tasks, expected_tasks, inbox):
+    """Returns (metrics dict, list of problem strings)."""
     pred, exp = defaultdict(list), defaultdict(list)
-    for t in json.loads(Path(args.predicted).read_text(encoding="utf-8"))["tasks"]:
+    for t in predicted_tasks:
         pred[t["message_id"]].append(t)
-    for t in json.loads(Path(args.expected).read_text(encoding="utf-8"))["tasks"]:
+    for t in expected_tasks:
         exp[t["message_id"]].append(t)
-    texts = bodies(args.inbox)
+    texts = bodies(inbox)
 
     tp = fp = fn = owner_ok = due_ok = invented = 0
     problems = []
@@ -93,6 +87,18 @@ def main():
               "task_f1": round(2 * prec * rec / max(prec + rec, 1e-9), 3),
               "owner_accuracy": round(owner_ok / max(tp, 1), 3), "due_accuracy": round(due_ok / max(tp, 1), 3),
               "invented_owner_or_due": invented, "matched": tp, "extra": fp, "missed": fn}
+    return result, problems
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--predicted", required=True)
+    ap.add_argument("--expected", required=True)
+    ap.add_argument("--inbox", required=True)
+    ap.add_argument("--quiet", action="store_true")
+    args = ap.parse_args()
+    load = lambda p: json.loads(Path(p).read_text(encoding="utf-8"))["tasks"]
+    result, problems = score(load(args.predicted), load(args.expected), args.inbox)
     print(json.dumps(result, indent=2))
     if not args.quiet:
         print("\n".join(problems) or "no problems")

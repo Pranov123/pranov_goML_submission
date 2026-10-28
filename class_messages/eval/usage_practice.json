@@ -1,0 +1,8 @@
+{
+  "model": "qwen2.5:3b",
+  "messages": 6,
+  "calls": 6,
+  "prompt_tokens": 2459,
+  "output_tokens": 138,
+  "failed": []
+}
