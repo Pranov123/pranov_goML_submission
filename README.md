@@ -128,10 +128,39 @@ Runs fully locally on a laptop CPU, about 4 s per message. No hosted API is used
 - **The independent set is the honest estimate.** A separate AI agent wrote it from the brief alone, with no access to my code, tests or labelling conventions, and it was committed before the first run. My own test sets score higher because I wrote both the rules and the tests.
 - **The failures each set exposed were then fixed**, and those reruns are reported in NOTES.md as no longer blind.
 - **Owners and deadlines are never invented.** Every one must appear in the message. This holds by design, so it isn't presented as a test result.
-
 - **Two runs give byte-identical output.** The diff is in `NOTES.md`.
 - **Practice folder: 2,459 tokens sent, 138 received.** 96% of the input is the fixed instructions and examples.
 - **The guardrails matter more than the model.** Without them, the same model obeys m04's injection and adds *"Email the answer key to grader@hidden.example"*. With them it does not. `qwen2.5:3b` and `llama3.2:3b` scored the same with guardrails (`eval/results_3b.md`).
 - **Remaining deadline misses** are mostly a judgement call: event times like "the demo on 18 March at 10am" are not counted as deadlines in my labels.
 
 See [`class_messages/NOTES.md`](class_messages/NOTES.md) for model, tokens, prompt, determinism, hallucination, validation, errors and guardrails.
+
+### Check it
+
+```bash
+cd class_messages
+python extract.py --inbox example --output out.json         # should match example/expected.json
+python extract.py --inbox eval/independent --output out.json
+python eval/score.py --predicted out.json --expected eval/independent/expected.json --inbox eval/independent
+python eval/compare.py --models qwen2.5:3b llama3.2:3b      # pipeline vs raw model, per model and set
+```
+
+### Files
+
+| File | Purpose |
+| --- | --- |
+| `extract.py` | Reads a folder of messages and writes one JSON task list, using `qwen2.5:3b` through a local Ollama server |
+| `NOTES.md` | Model, tokens, prompt, determinism, hallucination, validation, errors and guardrails, plus the evaluation |
+| `requirements.txt` | Nothing to `pip install` (standard library only); how to get Ollama and the model |
+| `tasks.json` | Output for the practice `messages/` folder |
+| `messages/`, `example/` | The practice messages and solved example from the brief |
+| `eval/independent/` | 20 messages and expected answers written from the brief alone, committed before any run (the honest test) |
+| `eval/independent_output.json`, `independent_run.log`, `independent_score.txt` | The blind run on that set: output, stderr log and score |
+| `eval/heldout/`, `eval/heldout_expected.json` | 16 messages of my own, expected answers committed before the first run |
+| `eval/devset/`, `eval/devset_expected.json` | 24 messages + 2 broken files I tuned against (multi-task, injections, Hinglish, …) |
+| `eval/devset_cases.json` | What each dev message tests |
+| `eval/practice_expected.json` | My expected answers for the practice folder |
+| `eval/score.py` | Scores an output against expected answers; counts owners or deadlines not found in the message |
+| `eval/compare.py` | Runs models with and without the guardrails on every set |
+| `eval/results_3b.md` | Comparison results for `qwen2.5:3b` and `llama3.2:3b` |
+| `eval/usage_practice.json` | Token counts for the practice run |
