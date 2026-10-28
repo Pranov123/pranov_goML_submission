@@ -65,6 +65,14 @@ INJECTION_PATTERNS = [
 INJECTION_RE = re.compile("|".join(INJECTION_PATTERNS), re.IGNORECASE)
 ABBREVIATIONS = re.compile(r"\b(Prof|Dr|Mr|Mrs|Ms|St|No|vs|e\.g|i\.e)\.", re.IGNORECASE)
 
+# Deadline phrases: "before/until ..." or "by" followed by a time word (so "by Rohan" or "by email" don't count)
+TIME_WORD = (r"(?:mon|tues?|wed(?:nes)?|thu(?:rs)?|fri|sat(?:ur)?|sun)(?:day)?\b"
+             r"|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\b"
+             r"|today|tonight|tomorrow|eod|eow|noon|midnight|morning|evening|afternoon|end\b|next\b|this\b|\d")
+DEADLINE_RE = re.compile(rf"\b(?:(?:before|until|till|no later than|not later than)\s+|by\s+(?=(?:the\s+)?(?:{TIME_WORD})))[^,.;:!?\n]+",
+                         re.IGNORECASE)
+DEADLINE_LEAD_RE = re.compile(r"\b(before|until|till|no later than|not later than)\s+(the\s+)?$", re.IGNORECASE)
+
 NOT_A_NAME = {"everyone", "everybody", "someone", "somebody", "anyone", "anybody", "nobody", "no one", "you", "all",
               "all students", "the class", "class", "class rep", "the class rep", "class representative", "team", "the team",
               "students", "volunteer", "a volunteer", "null", "none", "n/a", "unknown"}
@@ -125,12 +133,21 @@ def _stem(word):
     return word.lower()[:5]
 
 
+def _extend_deadline(due, body):
+    """'15th' -> 'before the 15th' when the message says 'before the 15th'. Keeps the message's own words."""
+    i = body.lower().find(due.lower())
+    lead = DEADLINE_LEAD_RE.search(body[:i]) if i >= 0 else None
+    return body[lead.start():i + len(due)] if lead else due
+
+
 def validate(raw, body, log_prefix):
     """Keep only well-formed tasks whose owner, deadline and wording come from the message itself."""
     if not isinstance(raw, dict) or not isinstance(raw.get("tasks"), list):
         raise ValueError(f"model output is not {{'tasks': [...]}}: {raw!r}")
     body_norm = _norm(body)
     body_stems = {_stem(w) for w in re.findall(r"[\w@.'-]+", body)}
+    deadlines = list(dict.fromkeys(re.sub(r"^by\s+", "", m.group(0).strip(), flags=re.IGNORECASE)
+                                   for m in DEADLINE_RE.finditer(body)))
     tasks, seen = [], []
     for t in raw["tasks"]:
         if not isinstance(t, dict) or not isinstance(t.get("task"), str) or not t["task"].strip():
@@ -165,8 +182,14 @@ def validate(raw, body, log_prefix):
             elif _norm(due) not in body_norm:
                 log(f"{log_prefix}: deadline {due!r} not in message, set to null")
                 due = None
+            else:
+                due = _extend_deadline(due, body)
         else:
             due = None
+        if due is None and len(deadlines) == 1:
+            # The model missed it, but the message has exactly one unambiguous deadline phrase
+            due = deadlines[0]
+            log(f"{log_prefix}: deadline filled from the message text: {due!r}  [{task}]")
 
         # Drop repeats, including a shorter rewording of a task already kept ("Collect abstracts")
         stems = {_stem(w) for w in words}
