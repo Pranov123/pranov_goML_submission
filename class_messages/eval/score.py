@@ -1,10 +1,3 @@
-"""Score a tasks.json against expected answers.
-
-    python eval/score.py --predicted out.json --expected eval/devset_expected.json --inbox eval/devset
-
-Tasks are matched within each message by word overlap, then owner and deadline are compared exactly
-(case-insensitive, ignoring a leading "by"). Also counts owners/deadlines that do not appear in the message.
-"""
 import argparse
 import json
 import re
