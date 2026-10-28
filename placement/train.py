@@ -1,10 +1,3 @@
-"""Rebuild model.joblib and model_with_status_code.joblib from the training data.
-
-    python train.py [--data data/train.csv]
-
-This is the recipe analysis.ipynb (section 2.10) uses to save the final models; the notebook
-explains why these features and this threshold procedure were chosen. Training is deterministic.
-"""
 import argparse
 from pathlib import Path
 
