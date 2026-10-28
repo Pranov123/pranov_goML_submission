@@ -1,11 +1,3 @@
-"""Turn a folder of class messages into one JSON task list, using a local model served by Ollama.
-
-    python extract.py --inbox messages --output tasks.json
-
-The model proposes tasks; this script decides what is kept. Every owner and deadline must appear in
-the message itself, injected instructions are cut out before the model sees the text, and one bad
-message never stops the rest of the folder. See NOTES.md.
-"""
 import argparse
 import json
 import re
@@ -18,7 +10,6 @@ from pathlib import Path
 DEFAULT_MODEL = "qwen2.5:3b"
 DEFAULT_HOST = "http://127.0.0.1:11434"
 
-# Greedy decoding with a fixed seed and context size, so a second run reproduces the first
 OPTIONS = {"temperature": 0, "top_k": 1, "top_p": 1, "seed": 42, "num_ctx": 2048, "num_predict": 400}
 
 SYSTEM_PROMPT = """You turn one short class message into a list of tasks.
