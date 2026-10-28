@@ -1,0 +1,5 @@
+message_id: h03
+from: Dept Office
+date: 9 Mar 2024
+
+Lunch is sponsored by the alumni cell tomorrow.

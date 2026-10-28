@@ -1,0 +1,5 @@
+message_id: h12
+from: Office
+date: 9 Mar 2024
+
+Dear class rep, kindly circulate the revised timetable to all sections.

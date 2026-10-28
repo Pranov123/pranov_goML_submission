@@ -1,0 +1,5 @@
+message_id: h16
+from: Class mentor
+date: 9 Mar 2024
+
+Tomorrow's stand-up is cancelled. Instead, Gautam please send a written update by 10am.

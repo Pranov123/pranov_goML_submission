@@ -1,0 +1,76 @@
+{
+  "tasks": [
+    {
+      "message_id": "h01",
+      "task": "Get the certificates signed by the HOD",
+      "owner": "Pooja",
+      "due": "next Tuesday"
+    },
+    {
+      "message_id": "h02",
+      "task": "Fix the projector in room 204",
+      "owner": null,
+      "due": "today"
+    },
+    {
+      "message_id": "h04",
+      "task": "Collect ID card numbers from all teams",
+      "owner": "Harish",
+      "due": "before the 3pm briefing"
+    },
+    {
+      "message_id": "h05",
+      "task": "Check whether the seminar hall has a working mic",
+      "owner": "Zoya",
+      "due": "Wednesday evening"
+    },
+    {
+      "message_id": "h07",
+      "task": "Design the event banner",
+      "owner": "Manav and Ira",
+      "due": null
+    },
+    {
+      "message_id": "h07",
+      "task": "Order the printouts",
+      "owner": "Manav",
+      "due": "the 22nd"
+    },
+    {
+      "message_id": "h08",
+      "task": "Return the borrowed books to the library",
+      "owner": "Kiran",
+      "due": "Friday"
+    },
+    {
+      "message_id": "h10",
+      "task": "Fill the feedback form on the portal",
+      "owner": null,
+      "due": "before 5pm today"
+    },
+    {
+      "message_id": "h12",
+      "task": "Circulate the revised timetable to all sections",
+      "owner": null,
+      "due": null
+    },
+    {
+      "message_id": "h13",
+      "task": "Receive the judges at the main gate",
+      "owner": "Om",
+      "due": null
+    },
+    {
+      "message_id": "h15",
+      "task": "Use the new template for the final report",
+      "owner": "Lakshmi",
+      "due": "Thursday"
+    },
+    {
+      "message_id": "h16",
+      "task": "Send a written update",
+      "owner": "Gautam",
+      "due": "10am"
+    }
+  ]
+}
