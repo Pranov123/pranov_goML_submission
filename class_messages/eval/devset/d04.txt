@@ -1,0 +1,5 @@
+message_id: d04
+from: Dept Office
+date: 8 Mar 2024
+
+No need to book the auditorium anymore, the event is cancelled.

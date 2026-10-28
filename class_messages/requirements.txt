@@ -1,0 +1,3 @@
+# extract.py and eval/score.py use only the Python standard library (Python 3.9+).
+# The local model runs in Ollama (https://ollama.com), installed separately:
+#   ollama pull qwen2.5:3b

@@ -1,0 +1,124 @@
+{
+  "tasks": [
+    {
+      "message_id": "d01",
+      "task": "Update the attendance tracker",
+      "owner": "Kavya",
+      "due": "Monday"
+    },
+    {
+      "message_id": "d01",
+      "task": "Email the lab schedule to everyone",
+      "owner": "Sameer",
+      "due": "Wednesday noon"
+    },
+    {
+      "message_id": "d02",
+      "task": "Submit peer review forms",
+      "owner": null,
+      "due": "Thursday"
+    },
+    {
+      "message_id": "d05",
+      "task": "Upload the final report to the portal",
+      "owner": "Priya",
+      "due": "9pm"
+    },
+    {
+      "message_id": "d06",
+      "task": "Collect the feedback forms",
+      "owner": null,
+      "due": "Friday"
+    },
+    {
+      "message_id": "d07",
+      "task": "Send the slides to Prof. Rao",
+      "owner": "Vikram",
+      "due": "tomorrow morning"
+    },
+    {
+      "message_id": "d08",
+      "task": "Restock the printer paper in the lab",
+      "owner": "Ishaan",
+      "due": null
+    },
+    {
+      "message_id": "d09",
+      "task": "Mail the sponsor list to the office",
+      "owner": "Meera",
+      "due": "EOD"
+    },
+    {
+      "message_id": "d11",
+      "task": "Finalise the budget sheet",
+      "owner": "Rohan",
+      "due": "before the 15th"
+    },
+    {
+      "message_id": "d12",
+      "task": "Remind the class about the viva schedule",
+      "owner": null,
+      "due": "tonight"
+    },
+    {
+      "message_id": "d14",
+      "task": "Submit the lab report",
+      "owner": "Aditya",
+      "due": "kal tak"
+    },
+    {
+      "message_id": "d16",
+      "task": "Book the bus for the industrial visit",
+      "owner": "Sneha",
+      "due": "20 March"
+    },
+    {
+      "message_id": "d17",
+      "task": "Compile the team list",
+      "owner": "Farhan",
+      "due": "before Friday's meeting"
+    },
+    {
+      "message_id": "d18",
+      "task": "Prepare the demo script",
+      "owner": "Tanvi and Joel",
+      "due": "Saturday"
+    },
+    {
+      "message_id": "d20",
+      "task": "Forward the email from Prof. Das to the group",
+      "owner": "Riya",
+      "due": "Friday"
+    },
+    {
+      "message_id": "d21",
+      "task": "Email the abstract to coordinator@college.example",
+      "owner": "Neha",
+      "due": "Monday"
+    },
+    {
+      "message_id": "d23",
+      "task": "Print the posters",
+      "owner": "Kabir",
+      "due": "Before the review"
+    },
+    {
+      "message_id": "d23",
+      "task": "Check the laptop charge",
+      "owner": "Lena",
+      "due": "Before the review"
+    },
+    {
+      "message_id": "d23",
+      "task": "Bring water bottles",
+      "owner": null,
+      "due": "Before the review"
+    },
+    {
+      "message_id": "d24",
+      "task": "Submit the NOC forms to the office",
+      "owner": "Divya",
+      "due": "5 April"
+    }
+  ]
+}

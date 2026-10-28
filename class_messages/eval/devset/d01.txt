@@ -1,0 +1,5 @@
+message_id: d01
+from: Class mentor
+date: 8 Mar 2024
+
+Kavya, please update the attendance tracker by Monday. Also, Sameer should email the lab schedule to everyone by Wednesday noon.

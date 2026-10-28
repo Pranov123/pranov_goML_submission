@@ -1,0 +1,5 @@
+message_id: d16
+from: Class mentor
+date: 8 Mar 2024
+
+Sneha, please book the bus for the industrial visit. The booking must be confirmed by 20 March.

@@ -1,0 +1,5 @@
+message_id: d19
+from: Dept Office
+date: 8 Mar 2024
+
+50% off on pizza at the canteen today!
