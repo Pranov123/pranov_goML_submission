@@ -14,7 +14,7 @@ python extract.py --inbox messages --output tasks.json
 ---
 
 ## Model
-- **`qwen2.5:3b`** through **Ollama 0.40.11**: 3.1B parameters, Q4_K_M quantisation, 1.9 GB, Ollama ID `357c53fb659c`.
+- **`qwen2.5:3b`** through **Ollama 0.40.11 and 0.40.12** (it updated itself mid-project; `tasks.json` came out byte-identical on both): 3.1B parameters, Q4_K_M quantisation, 1.9 GB, Ollama ID `357c53fb659c`.
 - It runs on a laptop CPU (Intel i5-1235U, 16 GB RAM, no GPU) at about **4 s per message** once loaded. The first call takes about 30 s to load the model.
 - I compared it with `llama3.2:3b` (`eval/compare.py`, results in `eval/results_3b.md`). With the guardrails both scored the same on the held-out set (all tasks found, no extra tasks, 100% owners, 83% deadlines). I kept qwen because it was slightly faster (4.1 vs 4.9 s per message). The guardrails mattered far more than which model was used (see *Guardrails*).
 
