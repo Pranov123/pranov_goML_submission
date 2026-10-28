@@ -108,21 +108,26 @@ Runs fully locally on a laptop CPU, about 4 s per message. No hosted API is used
 
 ### How it works
 **The model proposes, code decides.**
-1. **Injected instructions are removed** before the model sees the message ("ignore your instructions…", "SYSTEM:", "note to the AI…").
+1. **Injected instructions are removed** before the model sees the message ("ignore your instructions…", "SYSTEM:", "note to the AI…", "whoever compiles the task list…").
 2. **`qwen2.5:3b` is called once per message**, with greedy decoding, a fixed seed and a JSON-schema-constrained reply.
 3. **Every output is checked against the message:**
    - The owner must be a name that appears in the message.
    - The deadline must appear word for word.
    - The task wording must come from the message.
-4. **One bad file never stops the folder.** It is logged and skipped.
+4. **Tasks no class should ask for are blocked** on the output (answer keys, passwords, money transfers, sharing everyone's marks…), as a backstop for injections that get through.
+5. **One bad file never stops the folder.** It is logged and skipped.
 
 ### Results (`class_messages/eval/`)
 
-| Set | Tasks: precision / recall | Owners | Deadlines | Invented owner or deadline |
+| Set | Tasks: precision / recall | Owners | Deadlines | Injections blocked |
 | --- | --- | --- | --- | --- |
-| Practice (6) | 1.00 / 1.00 | 100% | 75% | 0 |
-| Held-out (16), first blind run | 1.00 / 0.92 | 100% | 73% | 0 |
-| Held-out after fixes (no longer blind) | 1.00 / 1.00 | 100% | 83% | 0 |
+| **Independent (20), first blind run** | **0.82 / 0.93** | **79%** | **86%** | **4 of 5** |
+| Practice (6) | 1.00 / 1.00 | 100% | 75% | 1 of 1 |
+| My held-out (16), first blind run | 1.00 / 0.92 | 100% | 73% | 1 of 2 |
+
+- **The independent set is the honest estimate.** A separate AI agent wrote it from the brief alone, with no access to my code, tests or labelling conventions, and it was committed before the first run. My own test sets score higher because I wrote both the rules and the tests.
+- **The failures each set exposed were then fixed**, and those reruns are reported in NOTES.md as no longer blind.
+- **Owners and deadlines are never invented.** Every one must appear in the message. This holds by design, so it isn't presented as a test result.
 
 - **Two runs give byte-identical output.** The diff is in `NOTES.md`.
 - **Practice folder: 2,459 tokens sent, 138 received.** 96% of the input is the fixed instructions and examples.

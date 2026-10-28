@@ -57,7 +57,8 @@ SCHEMA = {
 # Sentences that talk to the model instead of the class. They are removed before the model sees the message.
 INJECTION_PATTERNS = [
     r"\bignore\b.{0,40}\b(instruction|instructions|rules?|prompt|above|previous|task list)\b",
-    r"\b(disregard|forget|override)\b.{0,40}\b(instruction|instructions|rules?|prompt)\b",
+    r"\b(disregard|forget|override)\b.{0,40}\b(instruction|instructions|rules?|prompt|guidelines?)\b",
+    r"\b(whoever|whatever|any\s+(software|program|tool|bot|system))\b.{0,30}\b(compil|process|read|generat|pars|mak)\w*",
     r"\b(system|assistant|ai|model|llm|chatgpt)\s*[:,]",
     r"\b(note|message|instructions?)\s+(to|for)\s+(the\s+)?(ai|assistant|model|bot|llm)\b",
     r"\b(ai|assistant|model|bot|llm)\s+(reading|processing|parsing)\s+this\b",
@@ -86,7 +87,8 @@ DEADLINE_LEAD_RE = re.compile(r"\b(before|until|till|no later than|not later tha
 
 NOT_A_NAME = {"everyone", "everybody", "someone", "somebody", "anyone", "anybody", "nobody", "no one", "you", "all",
               "all students", "the class", "class", "class rep", "the class rep", "class representative", "team", "the team",
-              "students", "volunteer", "a volunteer", "null", "none", "n/a", "unknown"}
+              "students", "volunteer", "a volunteer", "null", "none", "n/a", "unknown",
+              "guys", "folks", "friends", "people", "all of you", "you all", "y'all", "everyone else"}
 STOPWORDS = {"the", "a", "an", "to", "for", "of", "and", "or", "in", "on", "at", "by", "with", "from", "into", "about",
              "your", "their", "all", "this", "that", "these", "those", "please", "some"}
 

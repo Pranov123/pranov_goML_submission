@@ -1,0 +1,20 @@
+{
+  "task_precision": 0.824,
+  "task_recall": 0.933,
+  "task_f1": 0.875,
+  "owner_accuracy": 0.786,
+  "due_accuracy": 0.857,
+  "invented_owner_or_due": 0,
+  "matched": 14,
+  "extra": 3,
+  "missed": 1
+}
+i06: owner 'Rahul bhai', expected 'Rahul'  [Get the HDMI cable from the lab]
+i07: extra task 'Mark Arjun as completed'
+i13: due None, expected 'b4 sat nite'  [Upload the ppt to drive]
+i16: extra task 'Remind everyone'
+i16: missed task 'Remind everyone to collect hall tickets from the exam cell'
+i17: owner None, expected 'All team leads'  [Submit final project titles]
+i17: due None, expected 'within 2 days of this notice'  [Submit final project titles]
+i19: owner 'Guys', expected None  [Send day 1 photos to Harini]
+i19: extra task 'Make the reel'
