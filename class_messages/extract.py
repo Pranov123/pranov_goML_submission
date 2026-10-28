@@ -59,6 +59,9 @@ INJECTION_PATTERNS = [
     r"\bignore\b.{0,40}\b(instruction|instructions|rules?|prompt|above|previous|task list)\b",
     r"\b(disregard|forget|override)\b.{0,40}\b(instruction|instructions|rules?|prompt)\b",
     r"\b(system|assistant|ai|model|llm|chatgpt)\s*[:,]",
+    r"\b(note|message|instructions?)\s+(to|for)\s+(the\s+)?(ai|assistant|model|bot|llm)\b",
+    r"\b(ai|assistant|model|bot|llm)\s+(reading|processing|parsing)\s+this\b",
+    r"\b(dear|hey|hi|hello)\s+(ai|assistant|model|bot|llm)\b",
     r"\byou are now\b",
     r"\b(add|create|insert|include)\s+(a\s+|another\s+|one\s+more\s+)?(new\s+)?task\b",
 ]
@@ -186,10 +189,6 @@ def validate(raw, body, log_prefix):
                 due = _extend_deadline(due, body)
         else:
             due = None
-        if due is None and len(deadlines) == 1:
-            # The model missed it, but the message has exactly one unambiguous deadline phrase
-            due = deadlines[0]
-            log(f"{log_prefix}: deadline filled from the message text: {due!r}  [{task}]")
 
         # Drop repeats, including a shorter rewording of a task already kept ("Collect abstracts")
         stems = {_stem(w) for w in words}
@@ -198,6 +197,14 @@ def validate(raw, body, log_prefix):
             continue
         seen.append(stems)
         tasks.append({"task": task, "owner": owner, "due": due})
+
+    # The model sometimes drops a deadline. If the message has exactly one deadline phrase and the model
+    # gave no task a deadline, it applies to all of them ("Before the review: Kabir prints..., Lena checks...").
+    # If another task already holds a deadline, it belongs to that task, so nothing is filled.
+    if len(deadlines) == 1 and all(t["due"] is None for t in tasks):
+        for t in tasks:
+            t["due"] = deadlines[0]
+            log(f"{log_prefix}: deadline filled from the message text: {deadlines[0]!r}  [{t['task']}]")
     return tasks
 
 
