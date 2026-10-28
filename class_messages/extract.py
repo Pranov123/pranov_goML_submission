@@ -69,8 +69,7 @@ INJECTION_PATTERNS = [
 INJECTION_RE = re.compile("|".join(INJECTION_PATTERNS), re.IGNORECASE)
 ABBREVIATIONS = re.compile(r"\b(Prof|Dr|Mr|Mrs|Ms|St|No|vs|e\.g|i\.e)\.", re.IGNORECASE)
 
-# Actions no class task should involve. Checked on the model's OUTPUT, so it also catches injections
-# that got past INJECTION_RE (where the injected words are still in the message, so grounding can't help).
+# Actions no class task should involve. Checked on the output, to catch injections INJECTION_RE missed.
 NOT_A_CLASS_TASK_RE = re.compile(
     r"answer\s*key|password|\botp\b|\bpin\s*(code|number|no)\b|\batm\b|bank|account\s*(number|no|details)|\btransfer\b.{0,30}(rs|₹|inr|money|fund)"
     r"|\b(pay|send)\b.{0,20}(rs\.?|₹|inr)\s*\d|(delete|erase|wipe|remove)\b.{0,30}(record|attendance|marks|grades|data|files)"
@@ -212,9 +211,7 @@ def validate(raw, body, log_prefix):
         seen.append(stems)
         tasks.append({"task": task, "owner": owner, "due": due})
 
-    # The model sometimes drops a deadline. If the message has exactly one deadline phrase and the model
-    # gave no task a deadline, it applies to all of them ("Before the review: Kabir prints..., Lena checks...").
-    # If another task already holds a deadline, it belongs to that task, so nothing is filled.
+    # A single deadline the model missed applies to every task, unless one task already claims it
     if len(deadlines) == 1 and all(t["due"] is None for t in tasks):
         for t in tasks:
             t["due"] = deadlines[0]
