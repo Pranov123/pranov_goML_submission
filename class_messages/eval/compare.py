@@ -1,11 +1,3 @@
-"""Compare local models, with and without the code-side guardrails, on all three message sets.
-
-    python eval/compare.py --models qwen2.5:3b llama3.2:3b --out eval/results.md
-
-"pipeline" = extract.py as submitted. "raw model" = the same prompt and JSON schema, but no injection
-stripping and no validation: whatever the model returns is written out. Each model is warmed up first,
-so the timings don't include loading it.
-"""
 import argparse
 import json
 import sys
